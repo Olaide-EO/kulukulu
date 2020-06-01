@@ -17,18 +17,6 @@ const App = () => {
 }
 
 
-/*
-
- <Text style={styles.text}>Love God and keep HIS commandment </Text>
-      <Text style={styles.text}>Great!</Text>
-      <Text style={styles.text}>
-                  {counterStore.count}
-              </Text>
-              <Button title="increment" onPress={() => counterStore.count++} />
-
-              */
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,12 +26,16 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text: {
-    color: '#fff'
+    color: '#000000'
   },
   wrapper: {
+    
     width: '100%',
     maxWidth: 425,
-
+    height: '100%',
+    backgroundColor: '#fafafa',
+    padding: 10,
+    
   }
 
 });
