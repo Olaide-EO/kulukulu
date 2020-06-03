@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row',
 		alignItems: 'center',
-		padding: 10,  
+		paddingHorizontal: 30,  
 	},
 	x: {
 		color: '#B2A1A1',
