@@ -17,7 +17,13 @@ const styles = StyleSheet.create({
 })
 
  const CurrentWorkout: React.FC<Props> = observer(() => {
+
      const rootStore = React.useContext(RootStoreContext);
+     React.useEffect(() => {
+       return () => {
+         rootStore.workoutTimerStore.stopTimer();
+       }
+     }, [])
 
 	return (
      <View style={styles.container}>
@@ -26,11 +32,13 @@ const styles = StyleSheet.create({
       return(
         <WorkoutCard 
          onSetPress={setIndex => {
+           rootStore.workoutTimerStore.startTimer();
            const v = e.sets[setIndex];
            let newValue: string;
            if( v === ''){
              newValue = `${e.reps}`
            }else if (v === '0') {
+             rootStore.workoutTimerStore.stopTimer();
              newValue = ''
            } else {
              newValue = `${parseInt(v) - 1}`
@@ -45,7 +53,14 @@ const styles = StyleSheet.create({
         )    
 
       })}
-       <WorkoutTimer onXPress={() => {}} />
+       { rootStore.workoutTimerStore.isRunning ? (
+         <WorkoutTimer 
+         percent={rootStore.workoutTimerStore.percent}
+         currentTime={rootStore.workoutTimerStore.display} 
+         onXPress={() => rootStore.workoutTimerStore.stopTimer()} />
+         ) : null
+       
+       }
      </View>
 		);
 });
