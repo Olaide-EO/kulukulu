@@ -3,12 +3,19 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import CurrentWorkout from './modules/CurrentWorkout';
 import WorkoutHistory from './modules/WorkoutHistory';
+import { Router, Switch, Route } from "./Router/index.web";
 
+const Routes = () => {
+	
+	return (
+        <Router>
+        	<Switch>
+               <Route exact path="/" component={WorkoutHistory} />
+               <Route exact path="/current-workout" component={CurrentWorkout} />
+        	</Switch>
 
-const Routes = observer(() => {
-	const rootStore = useContext(RootStoreContext);
-
-	return rootStore.routerStore.screen === 'WorkoutHistory' ? <WorkoutHistory />: <CurrentWorkout />;
-})
+        </Router>
+		);
+}
 
 export default Routes;
