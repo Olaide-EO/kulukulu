@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { observer } from "mobx-react-lite";
+import { Card } from './Card';
+
+
 interface Props {
  excercise: string;
  repsAndWeight: string;
@@ -9,16 +12,8 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  card: {
-  	borderRadius: 3,
-  	backgroundColor: '#fff',
-  	shadowColor: '#000',
-  	shadowOffset: { width: 2, height: 2},
-  	shadowOpacity: 0.3,
-  	shadowRadius: 3,
-  	flexDirection: 'column',
-  	padding: 10,
-    marginBottom: 10
+  cardContainer: {
+
   },
   topRow: {
   	flexDirection: 'row',
@@ -57,7 +52,8 @@ const styles = StyleSheet.create({
 
 export const WorkoutCard: React.FC<Props> = observer(({excercise, repsAndWeight, sets, onSetPress}) => {
 	return (
-        <View style={styles.card}>
+       <View style={styles.cardContainer}>
+        <Card>
           
            <View style={styles.topRow}>
 	           <Text style={styles.topRowText}>{excercise}</Text> 
@@ -87,6 +83,7 @@ export const WorkoutCard: React.FC<Props> = observer(({excercise, repsAndWeight,
                })}
            </View>
 
+        </Card>
         </View>
 		);
 })
