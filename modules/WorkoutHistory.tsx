@@ -2,10 +2,12 @@ import * as React from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../store/RootStore";
+import { RouteComponentProps } from "react-router";
+import { HistoryCard } from "../ui/HistoryCard";
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
-const WorkoutHistory: React.FC<Props> = observer(() => {
+const WorkoutHistory: React.FC<Props> = observer(({history}) => {
 	const rootStore = React.useContext(RootStoreContext);
 
 
@@ -41,9 +43,13 @@ const WorkoutHistory: React.FC<Props> = observer(() => {
                }
 
                );
-             	rootStore.routerStore.screen = "CurrentWorkout";
+             history.push("/current-workout");	
              }} 
           />
+
+          {Object.entries(rootStore.workoutStore.history).map(([dt,v]) => {
+            return <HistoryCard key={dt} header={dt} currentExercises={v} />
+          })}
        </View>
 		);
 })
