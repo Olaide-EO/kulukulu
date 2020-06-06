@@ -5,10 +5,51 @@ import { RootStoreContext } from "../store/RootStore";
 import { RouteComponentProps } from "react-router";
 import { HistoryCard } from "../ui/HistoryCard";
 
+
+
 interface Props extends RouteComponentProps {}
 
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row"
+  },
+    text: {
+    color: '#000000'
+  },
+  cardContainer: { 
+   flex: 1,
+   padding: 10,
+  },
+  
+
+})
+
 const WorkoutHistory: React.FC<Props> = observer(({history}) => {
-	const rootStore = React.useContext(RootStoreContext);
+	
+  const rootStore = React.useContext(RootStoreContext);
+  
+  const rows: JSX.Element[][] = [];
+
+  Object.entries(rootStore.workoutStore.history).forEach(([dt, v], i) => {
+    const hc = <View key={dt} style={styles.cardContainer}>   
+                  <HistoryCard  header={dt} currentExercises={v} />
+               </View>
+
+    if (i % 3 === 0) {
+      rows.push([hc])
+    } else {
+      rows[rows.length - 1].push(hc);
+    }
+  })
+
+  /*
+    [
+      [hc, hc],
+      [hc, hc],
+      [hc, hc],
+      [hc, hc],
+    ]
+  */
 
 
 	return (
@@ -47,20 +88,17 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
              }} 
           />
 
-          {Object.entries(rootStore.workoutStore.history).map(([dt,v]) => {
-            return <HistoryCard key={dt} header={dt} currentExercises={v} />
-          })}
+          {rows.map((r, i) => (
+             <View style={styles.row} key={i}>
+               {r}
+               {r.length < 3 ? <View style={styles.cardContainer} /> : null}
+             </View>
+            ))}
+
        </View>
 		);
 })
 
-const styles = StyleSheet.create({
- 
-  text: {
-    color: '#000000'
-  }
-
-});
 
 
 export default WorkoutHistory;
