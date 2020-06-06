@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 interface Props {
-
+ onPress?: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
 
 })
 
-export const Card: React.FC<Props> = ({children}) => {
+export const Card: React.FC<Props> = ({ children, onPress }) => {
+	if (onPress) {
+		return <TouchableOpacity style={styles.card}>{children}</TouchableOpacity>
+	}
+
 	return ( 
         <View style={styles.card} >
            { children }
