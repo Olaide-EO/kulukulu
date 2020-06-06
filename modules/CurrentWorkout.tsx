@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, ScrollView } from 'react-native';
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../store/RootStore";
 import { WorkoutCard } from "../ui/WorkoutCard"
@@ -16,7 +16,11 @@ const styles = StyleSheet.create({
   container: {
     
     margin: 10,
-    height: '80%'
+    height: '100%'
+  },
+  scrollContainer:{
+    padding: 10,
+    marginBottom: 50
   }
 })
 
@@ -31,6 +35,7 @@ const styles = StyleSheet.create({
 
 	return (
      <View style={styles.container}>
+     <ScrollView contentContainerStyle={styles.scrollContainer}>
        {rootStore.workoutStore.currentExercises.map(e => {
          
       return(
@@ -58,11 +63,14 @@ const styles = StyleSheet.create({
 
       })}
        <Button title="SAVE" onPress={ () => {
-         rootStore.workoutStore.history[dayjs().format("YYY-MM-DD")] = rootStore.workoutStore.currentExercises;
+         rootStore.workoutStore.history[dayjs(
+           new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format("YYYY-MM-DD")] = rootStore.workoutStore.currentExercises;
          rootStore.workoutStore.currentExercises = [];
          history.push('/')
 
        }} />
+       
+       </ScrollView>
        { rootStore.workoutTimerStore.isRunning ? (
          <WorkoutTimer 
          percent={rootStore.workoutTimerStore.percent}
