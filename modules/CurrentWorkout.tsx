@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
      }, [])
 
 	return (
-     <View style={styles.container}>
+     <View
+         keyboardShouldPersistTaps="always"
+         style={styles.container}>
      <ScrollView contentContainerStyle={styles.scrollContainer}>
        {rootStore.workoutStore.currentExercises.map(e => {
          
