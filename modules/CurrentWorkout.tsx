@@ -76,10 +76,16 @@ const styles = StyleSheet.create({
         )    
 
       })}
-       <Button title="SAVE" onPress={ () => {
-         rootStore.workoutStore.history[dayjs(
-           new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format("YYYY-MM-DD")] = rootStore.workoutStore.currentExercises;
-         rootStore.workoutStore.currentExercises = [];
+       <Button 
+         title="SAVE" 
+         onPress={ () => {
+           if (isCurrentWorkout){
+             rootStore.workoutStore.history[dayjs().format("YYYY-MM-DD")] = rootStore.workoutStore.currentExercises;
+             rootStore.workoutStore.currentExercises = [];
+           }else {
+             rootStore.workoutStore.history[dayjs().format("YYYY-MM-DD")] = rootStore.workoutStore.currentExercises;
+           }
+         
          history.push('/')
 
        }} />

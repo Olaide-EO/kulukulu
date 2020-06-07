@@ -52,42 +52,10 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
     }
   })
 
+
 	return (
        <View style={styles.container}>
-         <Text style={styles.text}>Workout History Page</Text>
-         <Button 
-             title="create workout"  
-             onPress={() => {
-               rootStore.workoutStore.currentExercises.push(
-               {
-                exercise: "Squat",
-                numSets: 5,
-                reps: 5,
-                sets: ["5", "5","5","5","5"],
-                weight: 260
-               },
-
-               {
-                exercise: "Bench Press",
-                numSets: 5,
-                reps: 5,
-                sets: ["5", "5","5","5","5"],
-                weight: 200
-               },
-
-               {
-                exercise: "Deadlift",
-                numSets: 1,
-                reps: 5,
-                sets: ["5", "x","x","x","x"],
-                weight: 360
-               }
-
-               );
-             history.push("/current-workout");	
-             }} 
-          />
-
+         
           <FlatList 
              data={rows} 
 
@@ -112,7 +80,97 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
              keyExtractor={(item) => item.reduce((pv,cv) => pv + " " + cv.date, "")} 
 
              />
-         <Fab />
+         <Fab onPress={() => {
+          
+           if ( rootStore.workoutStore.hasCurrentWorkout ) {
+                const {
+               currentBarbellRow,
+               currentBenchPress,
+               currentDeadlift,
+               currentSquat,
+               currentOverheadPress
+             } = rootStore.workoutStore;
+            
+            const emptySets = ["", "", "", "", ""]
+
+            if (rootStore.workoutStore.lastWorkoutType === 'b'){
+
+          
+              rootStore.workoutStore.currentExercises.push(
+               {
+                exercise: "Squat",
+                numSets: 5,
+                reps: 5,
+                sets: [...emptySets],
+                weight: currentSquat
+               },
+
+               {
+                exercise: "Bench Press",
+                numSets: 5,
+                reps: 5,
+                sets:  [...emptySets],
+                weight: currentBenchPress
+               },
+
+               {
+                exercise: "Deadlift",
+                numSets: 1,
+                reps: 5,
+                sets: ["", "x","x","x","x"],
+                weight: currentDeadlift
+               }
+
+               );
+
+            rootStore.workoutStore.currentSquat += 5
+            rootStore.workoutStore.currentBenchPress += 5
+            rootStore.workoutStore.currentDeadlift += 5
+           } else {
+
+
+              rootStore.workoutStore.currentExercises.push(
+               {
+                exercise: "Squat",
+                numSets: 5,
+                reps: 5,
+                sets: [...emptySets],
+                weight: currentSquat
+               },
+
+               {
+                exercise: "Overhead Press",
+                numSets: 5,
+                reps: 5,
+                sets:  [...emptySets],
+                weight: currentOverheadPress
+               },
+
+               {
+                exercise: "Barbel Row",
+                numSets: 1,
+                reps: 5,
+                sets: [...emptySets],
+                weight: currentBarbellRow
+               }
+
+               );
+
+            rootStore.workoutStore.currentSquat += 5
+            rootStore.workoutStore.currentOverheadPress += 5
+            rootStore.workoutStore.currentBarbellRow += 5
+           }
+            
+             rootStore.workoutStore.lastWorkoutType = 
+              rootStore.workoutStore.lastWorkoutType === "a" ? "a" : "b"
+           }
+
+      
+             history.push("/current-workout");  
+           }      
+         
+
+         }/>
        </View>
 		);
 })

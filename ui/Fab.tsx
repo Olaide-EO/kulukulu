@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 interface Props {
-
+ onPress: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -11,25 +11,29 @@ const styles = StyleSheet.create({
   height: 40,
   backgroundColor: 'pink',
   position: 'absolute',
-   right: 10,
-   bottom: 10,
+   right: 20,
+   bottom: 20,
    borderRadius: 20,
    shadowColor: '#000',
   	shadowOffset: { width: 2, height: 2},
   	shadowOpacity: 0.3,
   	shadowRadius: 3,
+  	alignItems: 'center',
+  	justifyContent: 'center'  
 
  },
  text: {
-  fontSize: 18
+  fontSize: 18,
+  marginLeft: 2,
+  marginBottom: 2,
  }
 });
 
 
-export const Fab: React.FC<Props> = () => {
+export const Fab: React.FC<Props> = ({onPress }) => {
 
 	return (
-      <TouchableOpacity style={styles.fab}>
+      <TouchableOpacity onPress={onPress} style={styles.fab}>
       	<Text style={styles.text}>+</Text>
       </TouchableOpacity>
 		);
