@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 export const Card: React.FC<Props> = ({ children, onPress }) => {
 	if (onPress) {
-		return <TouchableOpacity style={styles.card}>{children}</TouchableOpacity>
+		return <TouchableOpacity style={styles.card} onPress={onPress}>{children}</TouchableOpacity>
 	}
 
 	return ( 
