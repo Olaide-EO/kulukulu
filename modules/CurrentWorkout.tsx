@@ -8,9 +8,11 @@ import { RouteComponentProps } from "react-router";
 import dayjs from "dayjs";
 
 
-interface Props extends RouteComponentProps {
-
-}
+interface Props extends RouteComponentProps<{
+   year?: string
+   month?: string
+   day?: string
+}> {}
 
 const styles = StyleSheet.create({
   container: {
@@ -24,23 +26,33 @@ const styles = StyleSheet.create({
   }
 })
 
- const CurrentWorkout: React.FC<Props> = observer(({ history }) => {
+ const CurrentWorkout: React.FC<Props> = observer(({ history, match: { params: {day, month, year} } }) => {
 
      const rootStore = React.useContext(RootStoreContext);
+
      React.useEffect(() => {
        return () => {
          rootStore.workoutTimerStore.stopTimer();
        }
-     }, [])
+     }, []);
+
+
+
+ const isCurrentWorkout = !year && !month && !day;    
+ const dateKey = `${year}-${month}-${day}`;
+
+
 
 	return (
-     <View
-         keyboardShouldPersistTaps="always"
+     <View 
          style={styles.container}>
-     <ScrollView contentContainerStyle={styles.scrollContainer}>
-       {rootStore.workoutStore.currentExercises.map(e => {
-         
-      return(
+     <ScrollView 
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={styles.scrollContainer}
+     >
+      {( isCurrentWorkout ? rootStore.workoutStore.currentExercises: rootStore.workoutStore.history[dateKey] 
+         ).map(e => {
+      return (
         <WorkoutCard 
          onSetPress={setIndex => {
            rootStore.workoutTimerStore.startTimer();
