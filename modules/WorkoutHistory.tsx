@@ -5,7 +5,7 @@ import { RootStoreContext } from "../store/RootStore";
 import { RouteComponentProps } from "react-router";
 import { HistoryCard } from "../ui/HistoryCard";
 import { CurrentExercise } from "../store/WorkoutStore";
-
+import { Fab } from "../ui/Fab";
 
 interface Props extends RouteComponentProps {}
 
@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
    flex: 1,
    padding: 10,
   },
+  container: {
+    flex: 1
+  }
   
 
 })
@@ -50,7 +53,7 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
   })
 
 	return (
-       <View>
+       <View style={styles.container}>
          <Text style={styles.text}>Workout History Page</Text>
          <Button 
              title="create workout"  
@@ -89,7 +92,7 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
              data={rows} 
 
              renderItem={({ item }) => {
-                <View style={styles.row} >
+              return (<View style={styles.row} >
                    {item.map(({ date, exercises}) => (
                        <View key={date} style={styles.cardContainer}>
                            <HistoryCard 
@@ -104,12 +107,12 @@ const WorkoutHistory: React.FC<Props> = observer(({history}) => {
                      ))}
                    {item.length < 3 ? <View style={styles.cardContainer} /> : null}
                    {item.length < 2 ? <View style={styles.cardContainer} /> : null}
-                </View>
+                </View>)
              }}
              keyExtractor={(item) => item.reduce((pv,cv) => pv + " " + cv.date, "")} 
 
              />
-
+         <Fab />
        </View>
 		);
 })
